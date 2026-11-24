@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Decode binary assets
+        run: python3 decode-assets.py && rm -rf assets-b64
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
