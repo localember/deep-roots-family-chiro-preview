@@ -28,14 +28,17 @@
     });
   });
 
-  function showWaitlistConfirmation() {
-    var form = document.getElementById("waitlist-form");
-    var panel = document.getElementById("waitlist-confirmation");
-    if (form) form.hidden = true;
-    if (panel) {
-      panel.hidden = false;
-      panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  function goToThankYou(form) {
+    var email = form.querySelector("#email");
+    var fname = form.querySelector("#fname");
+    var lname = form.querySelector("#lname");
+    var hp = form.querySelector("#hpname");
+    if (hp && hp.value) return;
+    if (!fname.value.trim() || !lname.value.trim() || !email.value.trim() || !email.checkValidity()) {
+      form.reportValidity();
+      return;
     }
+    window.location.href = "thank-you/";
   }
 
   document.addEventListener(
@@ -44,7 +47,7 @@
       event.preventDefault();
       event.stopPropagation();
       if (event.target && event.target.id === "waitlist-form") {
-        showWaitlistConfirmation();
+        goToThankYou(event.target);
       }
       return false;
     },
@@ -60,7 +63,7 @@
       event.stopPropagation();
       var form = el.form || el.closest("form");
       if (form && form.id === "waitlist-form") {
-        showWaitlistConfirmation();
+        goToThankYou(form);
       }
       return false;
     },
